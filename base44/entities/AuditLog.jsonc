@@ -1,0 +1,85 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "actor_name": {
+      "type": "string",
+      "title": "Actor Name"
+    },
+    "actor_id": {
+      "type": "string",
+      "title": "Actor ID"
+    },
+    "action": {
+      "type": "string",
+      "title": "Action"
+    },
+    "target_type": {
+      "type": "string",
+      "title": "Target Type"
+    },
+    "target_id": {
+      "type": "string",
+      "title": "Target ID"
+    },
+    "details": {
+      "type": "string",
+      "title": "Details"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department"
+    }
+  },
+  "required": [
+    "actor_name",
+    "action"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

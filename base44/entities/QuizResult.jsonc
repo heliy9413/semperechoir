@@ -1,0 +1,70 @@
+{
+  "name": "QuizResult",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "title": "Member ID"
+    },
+    "member_name": {
+      "type": "string",
+      "title": "Member Name"
+    },
+    "score": {
+      "type": "number",
+      "title": "Score",
+      "default": 0
+    },
+    "total": {
+      "type": "number",
+      "title": "Total Questions",
+      "default": 0
+    },
+    "taken_at": {
+      "type": "string",
+      "title": "Taken At (ISO)"
+    }
+  },
+  "required": [
+    "member_name",
+    "score",
+    "total"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

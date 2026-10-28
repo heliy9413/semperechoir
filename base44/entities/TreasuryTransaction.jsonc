@@ -1,0 +1,109 @@
+{
+  "name": "TreasuryTransaction",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "title": "Type",
+      "enum": [
+        "income",
+        "expense"
+      ],
+      "default": "income"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category (\u121d\u12f5\u1265)"
+    },
+    "amount": {
+      "type": "number",
+      "title": "Amount (\u1218\u1320\u1295)",
+      "default": 0
+    },
+    "date": {
+      "type": "string",
+      "title": "Date",
+      "format": "date"
+    },
+    "month_label": {
+      "type": "string",
+      "title": "Ethiopian Month Label"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description (\u121b\u1265\u122b\u122a\u12eb)"
+    },
+    "recorded_by_name": {
+      "type": "string",
+      "title": "Recorded By"
+    }
+  },
+  "required": [
+    "type",
+    "amount",
+    "category"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

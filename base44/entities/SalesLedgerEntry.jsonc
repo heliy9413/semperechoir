@@ -1,0 +1,150 @@
+{
+  "name": "SalesLedgerEntry",
+  "type": "object",
+  "properties": {
+    "entry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date (\u1240\u1295)"
+    },
+    "description": {
+      "type": "string",
+      "title": "Item / Reason (\u12d5\u1243 \u12c8\u12ed\u121d \u121d\u12ad\u1295\u12eb\u1275)"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category (\u12d3\u12ed\u1290\u1275)",
+      "enum": [
+        "income",
+        "expense"
+      ],
+      "default": "income"
+    },
+    "quantity": {
+      "type": "number",
+      "title": "Quantity (\u1265\u12db\u1275)",
+      "default": 1
+    },
+    "unit_price": {
+      "type": "number",
+      "title": "Unit Price (\u12e8\u12a0\u1295\u12f5 \u12cb\u130b) \u2014 Birr",
+      "default": 0
+    },
+    "total_amount": {
+      "type": "number",
+      "title": "Total Amount (\u1320\u1245\u120b\u120b \u1218\u1320\u1295) \u2014 Birr",
+      "default": 0
+    },
+    "inventory_item_id": {
+      "type": "string",
+      "title": "Linked Inventory Item ID"
+    },
+    "inventory_name": {
+      "type": "string",
+      "title": "Linked Inventory Item Name"
+    },
+    "locked": {
+      "type": "boolean",
+      "title": "Locked (Submitted & Locked)",
+      "default": false
+    },
+    "locked_at": {
+      "type": "string",
+      "title": "Locked At (ISO)"
+    },
+    "locked_by_name": {
+      "type": "string",
+      "title": "Locked By"
+    },
+    "recorded_by_name": {
+      "type": "string",
+      "title": "Recorded By"
+    }
+  },
+  "required": [
+    "entry_date",
+    "description",
+    "category"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin",
+                "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+              }
+            },
+            {
+              "data.locked": {
+                "$ne": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin",
+                "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+              }
+            },
+            {
+              "data.locked": {
+                "$ne": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

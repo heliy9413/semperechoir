@@ -1,0 +1,132 @@
+{
+  "name": "AttendanceRecord",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "title": "Member ID"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year"
+    },
+    "month_index": {
+      "type": "number",
+      "title": "Month Index (0-11)"
+    },
+    "day": {
+      "type": "number",
+      "title": "Day of Month"
+    },
+    "session_type": {
+      "type": "string",
+      "title": "Session Type",
+      "enum": [
+        "tuesday",
+        "wednesday",
+        "sunday",
+        "fasting"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "title": "Attendance Status",
+      "enum": [
+        "present",
+        "absent",
+        "permission",
+        "late"
+      ],
+      "default": "absent"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "locked": {
+      "type": "boolean",
+      "title": "Locked",
+      "default": false
+    },
+    "saved_by_name": {
+      "type": "string",
+      "title": "Saved By"
+    },
+    "saved_at": {
+      "type": "string",
+      "title": "Saved Timestamp (ISO)"
+    },
+    "device_token": {
+      "type": "string",
+      "title": "Device Token (anti-proxy)"
+    }
+  },
+  "required": [
+    "member_id",
+    "session_type",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

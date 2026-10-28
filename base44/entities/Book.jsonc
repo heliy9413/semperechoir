@@ -1,0 +1,129 @@
+{
+  "name": "Book",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title (\u122d\u12a5\u1235)"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author (\u12f0\u122b\u1232)"
+    },
+    "folder_id": {
+      "type": "string",
+      "title": "Folder ID"
+    },
+    "folder_name": {
+      "type": "string",
+      "title": "Folder Name (\u134e\u120d\u12f0\u122d)"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department (\u12ad\u134d\u120d)",
+      "enum": [
+        "\u12e8\u1218\u12dd\u1219\u122d \u1325\u1293\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u1338\u120e\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d",
+        "\u12a0\u1320\u1243\u120b\u12ed"
+      ],
+      "default": "\u12a0\u1320\u1243\u120b\u12ed"
+    },
+    "priority": {
+      "type": "number",
+      "title": "Priority (\u1245\u12f5\u121a\u12eb 1\u13642\u13643)",
+      "minimum": 1,
+      "maximum": 3,
+      "default": 3
+    },
+    "pinned": {
+      "type": "boolean",
+      "title": "Pinned (\u12c8\u12f0 \u120b\u12ed \u1230\u12ab)",
+      "default": false
+    },
+    "description": {
+      "type": "string",
+      "title": "Description / Notes (\u1218\u130d\u1208\u132b)"
+    },
+    "file_type": {
+      "type": "string",
+      "title": "File Type (\u12e8\u134b\u12ed\u120d \u12a0\u12ed\u1290\u1275)",
+      "enum": [
+        "pdf",
+        "epub",
+        "text",
+        "docx",
+        "image",
+        "other"
+      ],
+      "default": "pdf"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "Private File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "Original Filename"
+    },
+    "cover_url": {
+      "type": "string",
+      "title": "Cover Image URL"
+    },
+    "uploaded_by_name": {
+      "type": "string",
+      "title": "Uploaded By"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

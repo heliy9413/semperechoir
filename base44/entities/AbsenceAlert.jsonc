@@ -1,0 +1,125 @@
+{
+  "name": "AbsenceAlert",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "title": "Member ID"
+    },
+    "member_name": {
+      "type": "string",
+      "title": "Member Name (\u1219\u1209 \u1235\u121d)"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year (\u12d3.\u121d)"
+    },
+    "month_index": {
+      "type": "number",
+      "title": "Ethiopian Month Index (0-11)"
+    },
+    "trigger_type": {
+      "type": "string",
+      "title": "Risk Trigger (\u12a0\u12f0\u130b \u121b\u1235\u1320\u1295\u1240\u1242\u12eb \u121d\u12ad\u1295\u12eb\u1275)",
+      "enum": [
+        "consecutive_2",
+        "consecutive_3",
+        "monthly_5",
+        "both",
+        "fasting_missed"
+      ],
+      "default": "consecutive_3"
+    },
+    "consecutive_count": {
+      "type": "number",
+      "title": "Consecutive Absences (\u1270\u12a8\u1273\u1273\u12ed \u12e8\u1320\u134b)",
+      "default": 0
+    },
+    "monthly_count": {
+      "type": "number",
+      "title": "Monthly Absences (\u1260\u12c8\u122d \u12e8\u1320\u134b)",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "title": "Pastoral Status (\u12e8\u1320\u1245\u120b\u12ed \u12a0\u1263\u1275 \u1270\u12a8\u1273\u1270\u120d \u1201\u1294\u1273)",
+      "enum": [
+        "Open",
+        "Followed Up",
+        "Resolved"
+      ],
+      "default": "Open"
+    },
+    "follow_up_notes": {
+      "type": "string",
+      "title": "Pastoral Follow-up Notes (\u12e8\u1320\u1245\u120b\u12ed \u12a0\u1263\u1275 \u1270\u12a8\u1273\u1270\u120d \u121b\u1235\u1273\u12c8\u123b)"
+    },
+    "followed_up_by_name": {
+      "type": "string",
+      "title": "Followed Up By (\u1260\u121b\u1295 \u1270\u12a8\u1273\u1270\u1208)"
+    },
+    "followed_up_at": {
+      "type": "string",
+      "title": "Followed Up At (ISO)"
+    }
+  },
+  "required": [
+    "member_id",
+    "member_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

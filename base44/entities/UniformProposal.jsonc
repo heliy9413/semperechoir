@@ -1,0 +1,113 @@
+{
+  "name": "UniformProposal",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Proposal Title (\u12e8\u12a0\u120d\u1263\u1235 \u12d3\u12ed\u1290\u1275)"
+    },
+    "description": {
+      "type": "string",
+      "title": "Design Notes (\u12f2\u12db\u12ed\u1295 \u121b\u1265\u122b\u122a\u12eb)"
+    },
+    "photo_url": {
+      "type": "string",
+      "title": "Reference Photo URL"
+    },
+    "gender": {
+      "type": "string",
+      "title": "Gender",
+      "enum": [
+        "Male (\u12e8\u12c8\u1295\u12f5 \u120d\u1265\u1235)",
+        "Female (\u12e8\u1234\u1275 \u120d\u1265\u1235)",
+        "Unisex"
+      ],
+      "default": "Unisex"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Idea",
+        "Review",
+        "Approved",
+        "Rejected"
+      ],
+      "default": "Idea"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "created_by_id": {
+      "type": "string",
+      "title": "Creator ID"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

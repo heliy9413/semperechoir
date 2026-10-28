@@ -1,0 +1,114 @@
+{
+  "name": "PrayerRequest",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title / Subject (\u122d\u12d5\u1235)"
+    },
+    "body": {
+      "type": "string",
+      "title": "Request / Testimony Details (\u12dd\u122d\u12dd\u122d)"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category (\u121d\u12f5\u1265)",
+      "enum": [
+        "request",
+        "testimony"
+      ],
+      "default": "request"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "open",
+        "answered",
+        "closed"
+      ],
+      "default": "open"
+    },
+    "is_public": {
+      "type": "boolean",
+      "title": "Share with choir (public)",
+      "default": true
+    },
+    "is_anonymous": {
+      "type": "boolean",
+      "title": "Post anonymously",
+      "default": false
+    },
+    "author_name": {
+      "type": "string",
+      "title": "Author Name"
+    },
+    "prayer_count": {
+      "type": "number",
+      "title": "Prayed-for count",
+      "default": 0
+    }
+  },
+  "required": [
+    "title",
+    "body",
+    "category"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.is_public": true
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "create": {},
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

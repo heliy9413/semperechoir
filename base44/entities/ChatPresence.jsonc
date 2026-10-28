@@ -1,0 +1,46 @@
+{
+  "name": "ChatPresence",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "title": "Auth User ID"
+    },
+    "member_id": {
+      "type": "string",
+      "title": "Roster Member ID"
+    },
+    "user_name": {
+      "type": "string",
+      "title": "Display Name"
+    },
+    "photo_url": {
+      "type": "string",
+      "title": "Photo URL"
+    },
+    "online": {
+      "type": "boolean",
+      "title": "Online (explicit flag)",
+      "default": false
+    },
+    "last_active_at": {
+      "type": "string",
+      "title": "Last Active At (ISO, UTC)"
+    }
+  },
+  "required": [
+    "user_id"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "data.user_id": "{{user.id}}"
+    },
+    "update": {
+      "data.user_id": "{{user.id}}"
+    },
+    "delete": {
+      "data.user_id": "{{user.id}}"
+    }
+  }
+}

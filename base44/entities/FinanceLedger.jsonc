@@ -1,0 +1,160 @@
+{
+  "name": "FinanceLedger",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "title": "Member ID"
+    },
+    "member_name": {
+      "type": "string",
+      "title": "Member Name"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone Number"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year"
+    },
+    "slot_number": {
+      "type": "number",
+      "title": "Roster Slot Number",
+      "default": 1
+    },
+    "m0": {
+      "type": "number",
+      "title": "\u1218\u1235\u12a8\u1228\u121d (Meskerem)",
+      "default": 0
+    },
+    "m1": {
+      "type": "number",
+      "title": "\u1325\u1245\u121d\u1275 (Tikimt)",
+      "default": 0
+    },
+    "m2": {
+      "type": "number",
+      "title": "\u1205\u12f3\u122d (Hidar)",
+      "default": 0
+    },
+    "m3": {
+      "type": "number",
+      "title": "\u1273\u1205\u1233\u1235 (Tahsas)",
+      "default": 0
+    },
+    "m4": {
+      "type": "number",
+      "title": "\u1325\u122d (Tir)",
+      "default": 0
+    },
+    "m5": {
+      "type": "number",
+      "title": "\u12e8\u12ab\u1272\u1275 (Yekatit)",
+      "default": 0
+    },
+    "m6": {
+      "type": "number",
+      "title": "\u1218\u130b\u1262\u1275 (Megabit)",
+      "default": 0
+    },
+    "m7": {
+      "type": "number",
+      "title": "\u121a\u12eb\u12da\u12eb (Miazia)",
+      "default": 0
+    },
+    "m8": {
+      "type": "number",
+      "title": "\u130d\u1295\u1266\u1275 (Ginbot)",
+      "default": 0
+    },
+    "m9": {
+      "type": "number",
+      "title": "\u1230\u1294 (Sene)",
+      "default": 0
+    },
+    "m10": {
+      "type": "number",
+      "title": "\u1210\u121d\u120c (Hamle)",
+      "default": 0
+    },
+    "m11": {
+      "type": "number",
+      "title": "\u1290\u1210\u1234 (Nehase)",
+      "default": 0
+    },
+    "locked_months_json": {
+      "type": "string",
+      "title": "Locked Months (JSON array of m0..m11)",
+      "default": "[]"
+    }
+  },
+  "required": [
+    "member_id",
+    "member_name",
+    "eth_year"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

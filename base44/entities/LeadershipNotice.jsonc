@@ -1,0 +1,147 @@
+{
+  "name": "LeadershipNotice",
+  "type": "object",
+  "properties": {
+    "notice_type": {
+      "type": "string",
+      "title": "Notice Type",
+      "enum": [
+        "broadcast",
+        "request"
+      ],
+      "default": "broadcast"
+    },
+    "title": {
+      "type": "string",
+      "title": "Title / Subject (\u122d\u12d5\u1235)"
+    },
+    "message": {
+      "type": "string",
+      "title": "Message (\u1218\u120d\u12d5\u12ad\u1275)"
+    },
+    "target_department": {
+      "type": "string",
+      "title": "Target Department",
+      "enum": [
+        "\u1201\u1209\u121d \u12ad\u134d\u120b\u1275 / All Leaders",
+        "\u12e8\u1218\u12dd\u1219\u122d \u1325\u1293\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u1338\u120e\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+      ],
+      "default": "\u1201\u1209\u121d \u12ad\u134d\u120b\u1275 / All Leaders"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "Urgent",
+        "Normal",
+        "Info"
+      ],
+      "default": "Normal"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status (for requests)",
+      "enum": [
+        "New",
+        "Seen",
+        "Resolved"
+      ],
+      "default": "New"
+    },
+    "acknowledged_by_json": {
+      "type": "string",
+      "title": "Acknowledged By (JSON array of names)"
+    },
+    "acknowledged_ids_json": {
+      "type": "string",
+      "title": "Acknowledged By IDs (JSON array)"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "created_by_id": {
+      "type": "string",
+      "title": "Created By ID"
+    },
+    "created_by_department": {
+      "type": "string",
+      "title": "Created By Department"
+    },
+    "resolved_by_name": {
+      "type": "string",
+      "title": "Resolved By"
+    }
+  },
+  "required": [
+    "notice_type",
+    "title",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    }
+  }
+}

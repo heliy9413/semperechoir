@@ -1,0 +1,155 @@
+{
+  "name": "AsratLedger",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "title": "Member ID"
+    },
+    "member_name": {
+      "type": "string",
+      "title": "Member Name"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone Number"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year"
+    },
+    "slot_number": {
+      "type": "number",
+      "title": "Roster Slot Number",
+      "default": 1
+    },
+    "m0": {
+      "type": "boolean",
+      "title": "\u1218\u1235\u12a8\u1228\u121d (Meskerem) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m1": {
+      "type": "boolean",
+      "title": "\u1325\u1245\u121d\u1275 (Tikimt) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m2": {
+      "type": "boolean",
+      "title": "\u1205\u12f3\u122d (Hidar) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m3": {
+      "type": "boolean",
+      "title": "\u1273\u1205\u1233\u1235 (Tahsas) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m4": {
+      "type": "boolean",
+      "title": "\u1325\u122d (Tir) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m5": {
+      "type": "boolean",
+      "title": "\u12e8\u12ab\u1272\u1275 (Yekatit) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m6": {
+      "type": "boolean",
+      "title": "\u1218\u130b\u1262\u1275 (Megabit) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m7": {
+      "type": "boolean",
+      "title": "\u121a\u12eb\u12da\u12eb (Miazia) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m8": {
+      "type": "boolean",
+      "title": "\u130d\u1295\u1266\u1275 (Ginbot) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m9": {
+      "type": "boolean",
+      "title": "\u1230\u1294 (Sene) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m10": {
+      "type": "boolean",
+      "title": "\u1200\u121d\u120c (Hamle) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    },
+    "m11": {
+      "type": "boolean",
+      "title": "\u1290\u1200\u1234 (Nehase) \u2014 \u12a0\u1235\u122b\u1275 \u1230\u1320",
+      "default": false
+    }
+  },
+  "required": [
+    "member_id",
+    "member_name",
+    "eth_year"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

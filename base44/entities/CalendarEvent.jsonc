@@ -1,0 +1,127 @@
+{
+  "name": "CalendarEvent",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Event Title (\u12e8\u12dd\u130d\u1305\u1275 \u1235\u12eb\u121d)"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category (\u121d\u12f5\u1265)",
+      "enum": [
+        "rehearsal",
+        "prayer_fasting",
+        "concert",
+        "attire",
+        "special",
+        "other"
+      ],
+      "default": "rehearsal"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year (\u12d3.\u121d.)"
+    },
+    "month_index": {
+      "type": "number",
+      "title": "Ethiopian Month Index (0-12)"
+    },
+    "day": {
+      "type": "number",
+      "title": "Ethiopian Day (1-30)"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department (\u12ad\u134d\u120d)",
+      "default": "\u12a0\u1320\u1243\u120b\u12ed"
+    },
+    "time_label": {
+      "type": "string",
+      "title": "Time Label (\u1230\u12d3\u1275)"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location (\u1266\u1273)"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes (\u121b\u1235\u1273\u12c8\u123b)"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "created_by_id": {
+      "type": "string",
+      "title": "Creator ID"
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "eth_year",
+    "month_index",
+    "day"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    }
+  }
+}

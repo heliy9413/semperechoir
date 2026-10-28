@@ -1,0 +1,141 @@
+{
+  "name": "ConcertProject",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Annual Plan Title (\u12d3\u1218\u1273\u12ca \u12d5\u1245\u12f5)"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description / Written Plan (\u12dd\u122d\u12dd\u122d \u12d5\u1245\u12f5)"
+    },
+    "goal_alignment": {
+      "type": "string",
+      "title": "Strategic Goal Alignment",
+      "enum": [
+        "Goal #10",
+        "Goal #13",
+        "Goal #10 & #13"
+      ],
+      "default": "Goal #10"
+    },
+    "lead_name": {
+      "type": "string",
+      "title": "Project Lead",
+      "default": "Biruk Girma"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Delayed"
+      ],
+      "default": "Not Started"
+    },
+    "target_date": {
+      "type": "string",
+      "title": "Target Completion Date (legacy Gregorian)",
+      "format": "date"
+    },
+    "target_eth_year": {
+      "type": "number",
+      "title": "Target Ethiopian Year (\u12d3.\u121d)"
+    },
+    "target_eth_month": {
+      "type": "number",
+      "title": "Target Ethiopian Month Index (0-12)"
+    },
+    "target_eth_day": {
+      "type": "number",
+      "title": "Target Ethiopian Day (1-30, 1-6 for Pagume)"
+    },
+    "monthly_plan_json": {
+      "type": "string",
+      "title": "Monthly Plan Breakdown (JSON: month index \u2192 action items)"
+    },
+    "attachment_url": {
+      "type": "string",
+      "title": "Plan Attachment URL (PDF / Image)"
+    },
+    "attachment_name": {
+      "type": "string",
+      "title": "Plan Attachment File Name"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department",
+      "default": "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    }
+  }
+}

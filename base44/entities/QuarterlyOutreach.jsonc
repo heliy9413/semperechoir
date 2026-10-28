@@ -1,0 +1,113 @@
+{
+  "name": "QuarterlyOutreach",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Outreach Title / Target Focus (\u12e8\u1235\u122d\u132d\u1271 \u12d3\u120b\u121b / \u122d\u12d5\u1235)"
+    },
+    "location": {
+      "type": "string",
+      "title": "Venue / Target Location (\u12e8\u121a\u12ab\u1204\u12f5\u1260\u1275 \u1266\u1273 / \u12a8\u1270\u121b / \u12ad\u120d\u120d)"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year (\u12d3.\u121d)"
+    },
+    "month_index": {
+      "type": "number",
+      "title": "Ethiopian Month Index (0-12)"
+    },
+    "day": {
+      "type": "number",
+      "title": "Ethiopian Day (1-30, 1-6 for Pagume)"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes / Materials Needed (\u1270\u1328\u121b\u122a \u121b\u1265\u122b\u122a\u12eb \u12c8\u12ed\u121d \u12e8\u121a\u12eb\u1235\u1348\u120d\u1309 \u1241\u1233\u1241\u1236\u127d)"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Planned",
+        "In Progress",
+        "Completed"
+      ],
+      "default": "Planned"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department",
+      "default": "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d"
+    }
+  },
+  "required": [
+    "title",
+    "location"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    }
+  }
+}

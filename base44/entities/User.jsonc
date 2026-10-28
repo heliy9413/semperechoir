@@ -1,0 +1,67 @@
+{
+  "properties": {
+    "role": {
+      "type": "string",
+      "description": "The role of the user in the app",
+      "enum": [
+        "admin",
+        "user"
+      ]
+    },
+    "choir_role": {
+      "type": "string",
+      "title": "Choir Role",
+      "enum": [
+        "super_admin",
+        "dept_admin",
+        "member"
+      ],
+      "default": "member"
+    },
+    "department": {
+      "type": "string",
+      "title": "Assigned Department",
+      "enum": [
+        "\u12e8\u1218\u12dd\u1219\u122d \u1325\u1293\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u1338\u120e\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d",
+        "\u12a0\u1320\u1243\u120b\u12ed"
+      ]
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone Number (for auto member match)"
+    },
+    "linked_member_id": {
+      "type": "string",
+      "title": "Linked Choir Member ID"
+    },
+    "linked_member_name": {
+      "type": "string",
+      "title": "Linked Choir Member Name"
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Account Active",
+      "default": true
+    },
+    "status": {
+      "type": "string",
+      "title": "Access Status",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    }
+  },
+  "required": [
+    "role"
+  ],
+  "name": "User",
+  "type": "object"
+}

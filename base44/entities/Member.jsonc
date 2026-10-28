@@ -1,0 +1,144 @@
+{
+  "name": "Member",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "title": "Full Name (\u1235\u121d)"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone Number (\u1235\u120d\u12ad)"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email (\u12a2\u121c\u12ed\u120d)"
+    },
+    "role": {
+      "type": "string",
+      "title": "Role / Ministry Position (\u12e8\u12a0\u1308\u120d\u130d\u120e\u1275 \u12f5\u122d\u123b)",
+      "default": "\u12a0\u1263\u120d"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department (\u12ad\u134d\u120d)",
+      "enum": [
+        "\u12e8\u1218\u12dd\u1219\u122d \u1325\u1293\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d",
+        "\u12e8\u1340\u120e\u1275 \u12ad\u134d\u120d",
+        "\u12a0\u1320\u1243\u120b\u12ed"
+      ],
+      "default": "\u12a0\u1320\u1243\u120b\u12ed"
+    },
+    "slot_number": {
+      "type": "number",
+      "title": "Slot Number (1-32)",
+      "default": 1
+    },
+    "vocal_section": {
+      "type": "string",
+      "title": "Vocal Section (SATB)",
+      "enum": [
+        "Soprano",
+        "Alto",
+        "Tenor",
+        "Bass",
+        "Unassigned"
+      ],
+      "default": "Unassigned"
+    },
+    "gender": {
+      "type": "string",
+      "title": "Gender (\u12c8\u1295 \u1348\u1265\u1235)",
+      "enum": [
+        "female",
+        "male"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Active",
+        "Inactive"
+      ],
+      "default": "Active"
+    },
+    "birth_month": {
+      "type": "number",
+      "title": "Birth Month (Ethiopian, 0-12)",
+      "minimum": 0,
+      "maximum": 12
+    },
+    "birth_day": {
+      "type": "number",
+      "title": "Birth Day (Ethiopian, 1-30)",
+      "minimum": 1,
+      "maximum": 30
+    },
+    "photo_url": {
+      "type": "string",
+      "title": "Profile Photo URL (\u12e8\u1218\u1308\u1208\u132b \u121d\u1235\u120d)"
+    },
+    "linked_user_id": {
+      "type": "string",
+      "title": "Linked Auth User ID"
+    },
+    "linked_email": {
+      "type": "string",
+      "title": "Linked Auth Email"
+    }
+  },
+  "required": [
+    "full_name",
+    "role"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

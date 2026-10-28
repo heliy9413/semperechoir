@@ -1,0 +1,139 @@
+{
+  "name": "ChatMessage",
+  "type": "object",
+  "properties": {
+    "room_id": {
+      "type": "string",
+      "title": "Thread ID (dm_<minMemberId>_<maxMemberId> | main)"
+    },
+    "sender_id": {
+      "type": "string",
+      "title": "Sender Auth User ID"
+    },
+    "sender_member_id": {
+      "type": "string",
+      "title": "Sender Member ID (roster)"
+    },
+    "recipient_member_id": {
+      "type": "string",
+      "title": "Recipient Member ID (roster, DM only)"
+    },
+    "sender_name": {
+      "type": "string",
+      "title": "Sender Display Name"
+    },
+    "sender_photo": {
+      "type": "string",
+      "title": "Sender Photo URL"
+    },
+    "body": {
+      "type": "string",
+      "title": "Message Body"
+    },
+    "message_type": {
+      "type": "string",
+      "title": "Message Type",
+      "enum": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "default": "text"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "Private File URI"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "file_type": {
+      "type": "string",
+      "title": "File MIME Type"
+    },
+    "file_size": {
+      "type": "number",
+      "title": "File Size (bytes)"
+    },
+    "edited": {
+      "type": "boolean",
+      "title": "Edited",
+      "default": false
+    },
+    "deleted": {
+      "type": "boolean",
+      "title": "Unsent / Deleted for everyone",
+      "default": false
+    },
+    "reply_to_id": {
+      "type": "string",
+      "title": "Replied-to Message ID"
+    },
+    "reply_to_preview": {
+      "type": "string",
+      "title": "Reply preview (sender + snippet)"
+    },
+    "reactions_json": {
+      "type": "string",
+      "title": "Reactions (JSON: { emoji: [member_id, ...] })",
+      "default": "{}"
+    },
+    "read_by_json": {
+      "type": "string",
+      "title": "Read By Member IDs (JSON array)",
+      "default": "[]"
+    }
+  },
+  "required": [
+    "room_id",
+    "sender_id",
+    "sender_name",
+    "message_type"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "data.sender_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.recipient_member_id": "{{user.data.linked_member_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

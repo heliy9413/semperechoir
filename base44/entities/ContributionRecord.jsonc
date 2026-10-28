@@ -1,0 +1,104 @@
+{
+  "name": "ContributionRecord",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string",
+      "title": "Campaign ID"
+    },
+    "member_id": {
+      "type": "string",
+      "title": "Member ID"
+    },
+    "member_name": {
+      "type": "string",
+      "title": "Member Name"
+    },
+    "paid": {
+      "type": "boolean",
+      "title": "Paid (\u1270\u12a8\u134d\u120f\u120d)",
+      "default": false
+    },
+    "amount": {
+      "type": "number",
+      "title": "Amount (Birr)",
+      "default": 0
+    },
+    "paid_at": {
+      "type": "string",
+      "title": "Paid At (ISO)"
+    },
+    "recorded_by_name": {
+      "type": "string",
+      "title": "Recorded By"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "member_id",
+    "member_name"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

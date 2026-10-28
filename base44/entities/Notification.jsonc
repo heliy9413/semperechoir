@@ -1,0 +1,107 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "announcements",
+        "prayer",
+        "departments",
+        "comments",
+        "scripture"
+      ],
+      "default": "announcements"
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "body": {
+      "type": "string",
+      "title": "Summary"
+    },
+    "link_path": {
+      "type": "string",
+      "title": "Deep-link Route"
+    },
+    "link_anchor": {
+      "type": "string",
+      "title": "Anchor / Record ID"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "urgent",
+        "normal"
+      ],
+      "default": "normal"
+    },
+    "audience": {
+      "type": "string",
+      "title": "Audience",
+      "enum": [
+        "all",
+        "participants"
+      ],
+      "default": "all"
+    },
+    "thread_id": {
+      "type": "string",
+      "title": "Thread ID (grouping key)"
+    },
+    "target_user_ids_json": {
+      "type": "string",
+      "title": "Target User IDs (JSON array)",
+      "default": "[]"
+    },
+    "read_by_json": {
+      "type": "string",
+      "title": "Read By User IDs (JSON array)",
+      "default": "[]"
+    },
+    "group_count": {
+      "type": "number",
+      "title": "Grouped Event Count",
+      "default": 1
+    },
+    "actor_name": {
+      "type": "string",
+      "title": "Triggered By"
+    },
+    "actor_id": {
+      "type": "string",
+      "title": "Actor ID"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department"
+    }
+  },
+  "required": [
+    "category",
+    "title",
+    "link_path"
+  ],
+  "rls": {
+    "read": null,
+    "create": {},
+    "update": {},
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

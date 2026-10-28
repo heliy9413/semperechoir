@@ -1,0 +1,191 @@
+{
+  "name": "WeeklyReport",
+  "type": "object",
+  "properties": {
+    "week_label": {
+      "type": "string",
+      "title": "Period Label"
+    },
+    "month_label": {
+      "type": "string",
+      "title": "Ethiopian Month Label (\u12c8\u122b\u12ca \u1225\u122b)"
+    },
+    "year": {
+      "type": "number",
+      "title": "Year"
+    },
+    "week_number": {
+      "type": "number",
+      "title": "Period Number"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department",
+      "enum": [
+        "\u12e8\u1218\u12dd\u1219\u122d \u1325\u1293\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u1338\u120e\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d",
+        "\u12a0\u1320\u1243\u120b\u12ed"
+      ],
+      "default": "\u12a0\u1320\u1243\u120b\u12ed"
+    },
+    "submitted_by_name": {
+      "type": "string",
+      "title": "Submitted By"
+    },
+    "submitted_by_id": {
+      "type": "string",
+      "title": "Submitter ID"
+    },
+    "program_title": {
+      "type": "string",
+      "title": "Program / Task Title (\u12e8\u1355\u122e\u130d\u122b\u121d \u122d\u12d5\u1235)"
+    },
+    "completed_tasks": {
+      "type": "string",
+      "title": "\u12e8\u1270\u1230\u122b (Completed)"
+    },
+    "not_completed": {
+      "type": "string",
+      "title": "\u12eb\u120d\u1270\u1230\u122b (Not Completed)"
+    },
+    "ongoing_items": {
+      "type": "string",
+      "title": "\u1260\u1202\u12f0\u1275 \u120b\u12ed \u12eb\u1208 (In Progress)"
+    },
+    "challenges": {
+      "type": "string",
+      "title": "\u130a\u12dc \u12e8\u121a\u1348\u120d\u130d (Requires Time)"
+    },
+    "other_reasons": {
+      "type": "string",
+      "title": "\u120c\u120e\u127d \u121d\u12ad\u1295\u12eb\u1276\u127d (Other Reasons)"
+    },
+    "next_week_plan": {
+      "type": "string",
+      "title": "Next Period Plan"
+    },
+    "work_status": {
+      "type": "string",
+      "title": "Status (\u1201\u1294\u1273)",
+      "enum": [
+        "\u12e8\u1270\u1230\u122b",
+        "\u12eb\u120d\u1270\u1230\u122b",
+        "\u1260\u1202\u12f0\u1275 \u120b\u12ed \u12eb\u1208",
+        "\u130a\u12dc \u12e8\u121a\u1348\u120d\u130d",
+        "\u120c\u120e\u127d \u121d\u12ad\u1295\u12eb\u1276\u127d"
+      ],
+      "default": "\u1260\u1202\u12f0\u1275 \u120b\u12ed \u12eb\u1208"
+    },
+    "target_date": {
+      "type": "string",
+      "title": "Target Date",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Review Status",
+      "enum": [
+        "Submitted",
+        "Reviewed"
+      ],
+      "default": "Submitted"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "title": "Reviewed By"
+    },
+    "review_notes": {
+      "type": "string",
+      "title": "Admin Review & Feedback"
+    }
+  },
+  "required": [
+    "department",
+    "completed_tasks"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

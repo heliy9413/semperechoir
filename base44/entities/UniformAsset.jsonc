@@ -1,0 +1,149 @@
+{
+  "name": "UniformAsset",
+  "type": "object",
+  "properties": {
+    "item_name": {
+      "type": "string",
+      "title": "Uniform Name / Type (\u12e8\u120d\u1265\u1231 \u1235\u121d / \u12a0\u12ed\u1290\u1275)"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "Robe (\u120d\u1265\u1235)",
+        "Shawl (\u123b\u120d)",
+        "Hymn Book (\u1218\u133d\u1210\u134d)",
+        "Instrument (\u1275\u1295\u12ad\u12ad\u120d)",
+        "Microphone (\u121b\u12ed\u12ad\u122e\u134e\u1295)",
+        "Cable (\u1308\u1218\u12f5)",
+        "Other"
+      ],
+      "default": "Robe (\u120d\u1265\u1235)"
+    },
+    "photo_url": {
+      "type": "string",
+      "title": "Photo URL (\u12e8\u120d\u1265\u1231 \u134e\u1276)"
+    },
+    "male_count": {
+      "type": "number",
+      "title": "Male Count (\u12e8\u12c8\u1295\u12f5 \u1265\u12db\u1275)",
+      "default": 0
+    },
+    "female_count": {
+      "type": "number",
+      "title": "Female Count (\u12e8\u1234\u1275 \u1265\u12db\u1275)",
+      "default": 0
+    },
+    "item_code": {
+      "type": "string",
+      "title": "Item Code / Tag (\u1245\u1345)"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "title": "Assigned To (\u1208\u121a\u1348\u1240\u12f0\u12cd)"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "title": "Assigned Member ID"
+    },
+    "quantity": {
+      "type": "number",
+      "title": "Total Quantity (\u1320\u1245\u120b\u120b)",
+      "default": 0
+    },
+    "condition": {
+      "type": "string",
+      "title": "Condition (\u1201\u1294\u1273)",
+      "enum": [
+        "New",
+        "Good",
+        "Worn",
+        "Needs Repair",
+        "Retired"
+      ],
+      "default": "Good"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "In Store",
+        "Assigned",
+        "In Repair",
+        "Retired"
+      ],
+      "default": "In Store"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes / Maintenance (\u121b\u1235\u1273\u12c8\u123b)"
+    }
+  },
+  "required": [
+    "item_name",
+    "category"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

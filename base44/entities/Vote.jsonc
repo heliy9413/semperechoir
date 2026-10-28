@@ -1,0 +1,78 @@
+{
+  "name": "Vote",
+  "type": "object",
+  "properties": {
+    "poll_id": {
+      "type": "string",
+      "title": "Poll ID"
+    },
+    "member_id": {
+      "type": "string",
+      "title": "Voter Member ID"
+    },
+    "member_name": {
+      "type": "string",
+      "title": "Voter Name"
+    },
+    "option_index": {
+      "type": "number",
+      "title": "Chosen Option Index",
+      "default": 0
+    }
+  },
+  "required": [
+    "poll_id",
+    "member_id",
+    "option_index"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    }
+  }
+}

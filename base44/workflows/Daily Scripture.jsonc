@@ -1,0 +1,44 @@
+{
+  "description": "Daily 6:00 AM EAT (\u1320\u12cb\u1275 12:00 \u1230\u12d3\u1275) devotional Bible verse broadcast to all members via the notification Bell, Web Push, and Telegram.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 6 * * *",
+      "one_time_date": null,
+      "timezone": "Africa/Addis_Ababa",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "daily_scripture",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_verse": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "sendDailyScripture"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "\u12e8\u12d5\u1208\u1271 \u1295\u1263\u1265 \u120b\u12ad",
+            "description": "Daily 6 AM (\u1320\u12cb\u1275 12 \u1230\u12d3\u1275) verse notification"
+          }
+        }
+      }
+    ]
+  },
+  "name": "Daily Scripture Notification"
+}

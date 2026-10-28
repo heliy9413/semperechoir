@@ -1,0 +1,184 @@
+{
+  "name": "MusicMinistry",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Song Title (\u12e8\u1218\u12dd\u1219\u1229 \u122d\u12d5\u1235)"
+    },
+    "composer": {
+      "type": "string",
+      "title": "Composer / Singer (\u12a0\u1240\u1293\u1263\u122a)"
+    },
+    "service_target": {
+      "type": "string",
+      "title": "Service Target",
+      "enum": [
+        "Sunday Service",
+        "Tuesday New Song Rehearsal",
+        "Wednesday Regular Practice",
+        "Special Concert"
+      ],
+      "default": "Sunday Service"
+    },
+    "lyrics_link": {
+      "type": "string",
+      "title": "Lyrics / Sheet Link"
+    },
+    "vocal_arrangement": {
+      "type": "string",
+      "title": "Vocal Arrangement (SATB cues)"
+    },
+    "style_or_scale": {
+      "type": "string",
+      "title": "Style / Scale (\u1235\u1273\u12ed\u120d\u1293 \u1245\u129d\u1275)",
+      "enum": [
+        "Waltz",
+        "Reggae",
+        "Ballad",
+        "Disco",
+        "Slow Rock",
+        "Chikchika (\u127d\u12ad\u127d\u12ab)",
+        "Wollo (\u12c8\u120e)",
+        "Anchihoye Lene (\u12a0\u1295\u127a\u1206\u12ec \u120c\u1294)",
+        "Tizita Minor (\u1275\u12dd\u1273 \u121b\u12ed\u1290\u122d)",
+        "Ambasel (\u12a0\u121d\u1263\u1230\u120d)",
+        "Bati (\u1263\u1272)"
+      ],
+      "default": "Waltz"
+    },
+    "tempo_bpm": {
+      "type": "number",
+      "title": "Tempo (BPM)",
+      "default": 90
+    },
+    "song_key": {
+      "type": "string",
+      "title": "Key",
+      "enum": [
+        "C",
+        "C#",
+        "D",
+        "Eb",
+        "E",
+        "F",
+        "F#",
+        "G",
+        "Ab",
+        "A",
+        "Bb",
+        "B"
+      ],
+      "default": "C"
+    },
+    "pitch_shift": {
+      "type": "number",
+      "title": "Pitch Shift (semitones)",
+      "default": 0
+    },
+    "chord_i": {
+      "type": "string",
+      "title": "1st Chord (I)"
+    },
+    "chord_ii": {
+      "type": "string",
+      "title": "2nd Chord (ii)"
+    },
+    "chord_iii": {
+      "type": "string",
+      "title": "3rd Chord (iii)"
+    },
+    "chord_v": {
+      "type": "string",
+      "title": "5th Chord (V)"
+    },
+    "chord_vi": {
+      "type": "string",
+      "title": "6th Chord (vi)"
+    },
+    "audio_soprano": {
+      "type": "string",
+      "title": "Audio Demo \u2014 Soprano (URL)"
+    },
+    "audio_alto": {
+      "type": "string",
+      "title": "Audio Demo \u2014 Alto (URL)"
+    },
+    "audio_tenor": {
+      "type": "string",
+      "title": "Audio Demo \u2014 Tenor (URL)"
+    },
+    "audio_bass": {
+      "type": "string",
+      "title": "Audio Demo \u2014 Bass (URL)"
+    },
+    "instrumentation_notes": {
+      "type": "string",
+      "title": "Arrangement / Instrumentation Notes (\u12e8\u12dc\u121b\u1293 \u12e8\u1219\u12da\u1243 \u121b\u1235\u1273\u12c8\u123b)"
+    }
+  },
+  "required": [
+    "title",
+    "style_or_scale"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    }
+  }
+}

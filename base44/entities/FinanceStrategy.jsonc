@@ -1,0 +1,103 @@
+{
+  "name": "FinanceStrategy",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Strategy Title (\u12e8\u1235\u120d\u1275 \u122d\u12d5\u1235)"
+    },
+    "strategy_text": {
+      "type": "string",
+      "title": "Strategy Description (\u12e8\u1235\u120d\u1275 \u121b\u1265\u122b\u122a\u12eb)"
+    },
+    "milestones_json": {
+      "type": "string",
+      "title": "Milestone Action Checklist (JSON: [{text, done}])"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status (\u1201\u1294\u1273)",
+      "enum": [
+        "Planned",
+        "Active",
+        "Completed"
+      ],
+      "default": "Active"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department",
+      "default": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

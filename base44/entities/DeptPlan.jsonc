@@ -1,0 +1,193 @@
+{
+  "name": "DeptPlan",
+  "type": "object",
+  "properties": {
+    "department": {
+      "type": "string",
+      "title": "Department (\u12ad\u134d\u120d)",
+      "enum": [
+        "\u12e8\u1218\u12dd\u1219\u122d \u1325\u1293\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u1338\u120e\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d",
+        "\u12a0\u1320\u1243\u120b\u12ed"
+      ]
+    },
+    "horizon": {
+      "type": "string",
+      "title": "Horizon",
+      "enum": [
+        "annual",
+        "monthly"
+      ],
+      "default": "annual"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year"
+    },
+    "month_index": {
+      "type": "number",
+      "title": "Ethiopian Month Index (0-12)",
+      "default": 0
+    },
+    "title": {
+      "type": "string",
+      "title": "Title (\u122d\u12d5\u1235)"
+    },
+    "details": {
+      "type": "string",
+      "title": "Details (\u12dd\u122d\u12dd\u122d)"
+    },
+    "work_items": {
+      "type": "string",
+      "title": "Work Items (\u12dd\u122d\u12dd\u122d \u1235\u122b\u12ce\u127d)"
+    },
+    "metric": {
+      "type": "string",
+      "title": "Measurement / KPI (\u1218\u1208\u12aa\u12eb)"
+    },
+    "target_date": {
+      "type": "string",
+      "title": "Target Date (\u1240\u1295)",
+      "format": "date"
+    },
+    "submission_type": {
+      "type": "string",
+      "title": "Submission Mode",
+      "enum": [
+        "text",
+        "photo",
+        "pdf"
+      ],
+      "default": "text"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Uploaded Plan File URL (photo/pdf)"
+    },
+    "linked_fasting_id": {
+      "type": "string",
+      "title": "Linked Fasting Session ID"
+    },
+    "prayer_target": {
+      "type": "string",
+      "title": "Linked Prayer Target (\u12e8\u1338\u120e\u1275 \u12d2\u120b\u121b)"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Approved"
+      ],
+      "default": "Not Started"
+    },
+    "submitted_by_name": {
+      "type": "string",
+      "title": "Submitted By"
+    },
+    "submitted_by_id": {
+      "type": "string",
+      "title": "Submitter ID"
+    },
+    "review_notes": {
+      "type": "string",
+      "title": "Review Notes"
+    },
+    "reviewed_by_name": {
+      "type": "string",
+      "title": "Approved By"
+    }
+  },
+  "required": [
+    "department",
+    "horizon",
+    "title"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

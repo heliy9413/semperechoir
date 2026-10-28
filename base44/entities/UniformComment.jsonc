@@ -1,0 +1,72 @@
+{
+  "name": "UniformComment",
+  "type": "object",
+  "properties": {
+    "proposal_id": {
+      "type": "string",
+      "title": "Proposal ID"
+    },
+    "author_name": {
+      "type": "string",
+      "title": "Author Name"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author ID"
+    },
+    "body": {
+      "type": "string",
+      "title": "Comment (\u12a0\u1235\u1270\u12eb\u12e8\u1275)"
+    },
+    "photo_url": {
+      "type": "string",
+      "title": "Reference Photo URL"
+    },
+    "created_at": {
+      "type": "string",
+      "title": "Created At (ISO)"
+    }
+  },
+  "required": [
+    "proposal_id",
+    "body"
+  ],
+  "rls": {
+    "read": null,
+    "create": {},
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

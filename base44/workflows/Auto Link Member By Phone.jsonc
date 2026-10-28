@@ -1,0 +1,42 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_link_member_by_phone",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "auto_link": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "autoLinkUserByPhone",
+            "args": {
+              "user_id": "${ .trigger.user_id }",
+              "email": "${ .trigger.email }",
+              "auth_method": "${ .trigger.auth_method }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "\u1260\u1235\u120d\u12ad \u12a0\u1308\u1293\u129d",
+            "description": "Auto-link user to choir member by phone"
+          }
+        }
+      }
+    ]
+  },
+  "description": "On sign-in or signup, auto-link the authenticated user to a registered choir member by matching their phone number. The function authenticates the caller via base44.auth.me() and links only the caller's own account \u2014 no shared token required.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "app_user_auth",
+      "events": [
+        "login",
+        "signup"
+      ]
+    }
+  },
+  "name": "Auto Link Member By Phone"
+}

@@ -1,0 +1,175 @@
+{
+  "name": "FastingSession",
+  "type": "object",
+  "properties": {
+    "program_type": {
+      "type": "string",
+      "title": "Program Type",
+      "enum": [
+        "retreat",
+        "monthly",
+        "annual"
+      ],
+      "default": "monthly"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year (\u12d3.\u121d)"
+    },
+    "month_index": {
+      "type": "number",
+      "title": "Ethiopian Month Index (0-11)"
+    },
+    "day": {
+      "type": "number",
+      "title": "Ethiopian Day (\u1240\u1295)",
+      "default": 1
+    },
+    "end_year": {
+      "type": "number",
+      "title": "End Ethiopian Year (\u12d3.\u121d) \u2014 retreat multi-day"
+    },
+    "end_month_index": {
+      "type": "number",
+      "title": "End Ethiopian Month Index \u2014 retreat multi-day"
+    },
+    "end_day": {
+      "type": "number",
+      "title": "End Ethiopian Day \u2014 retreat multi-day"
+    },
+    "title": {
+      "type": "string",
+      "title": "Program Title (\u12e8\u1338\u120e\u1271 \u122d\u12d5\u1235/\u12a0\u120b\u121b)"
+    },
+    "prayer_shift": {
+      "type": "string",
+      "title": "Prayer Shift / Hours (\u12e8\u1230\u12d3\u1275 \u12ad\u134d\u1208 \u130a\u12dc)",
+      "enum": [
+        "Morning (\u1320\u12cb\u1275 6:00 - 9:00)",
+        "Midday (\u1240\u1295 9:00 - 12:00)",
+        "Afternoon (\u12a8\u1230\u12d3\u1275 \u1260\u128b\u120b 12:00 - 15:00)",
+        "Evening (\u121d\u123d\u1275 15:00 - 18:00)",
+        "Night Vigil (\u120c\u120a\u1275 18:00 - 21:00)",
+        "Full Day (\u1219\u1209 \u1240\u1295)",
+        "Multi-Day (\u1263\u1208\u1265\u12d9 \u1240\u1293\u1275)"
+      ],
+      "default": "Morning (\u1320\u12cb\u1275 6:00 - 9:00)"
+    },
+    "venue": {
+      "type": "string",
+      "title": "Venue / Platform (\u1266\u1273/\u12a0\u12f3\u122b\u123d)"
+    },
+    "location": {
+      "type": "string",
+      "title": "Location / Hall (\u12a0\u12f3\u122b\u123d / \u1266\u1273)"
+    },
+    "shift_leaders": {
+      "type": "string",
+      "title": "Shifts / Shift Leaders (\u12e8\u1348\u122a\u12eb \u1283\u120b\u134a\u12ce\u127d)"
+    },
+    "prayer_focus": {
+      "type": "string",
+      "title": "Special Prayer Focus (\u12e8\u1338\u120e\u1275 \u121b\u12d5\u12a8\u120d)"
+    },
+    "prayer_points": {
+      "type": "string",
+      "title": "Special Prayer Points (\u12e8\u1338\u120e\u1275 \u12a0\u122d\u12d5\u1235\u1276\u127d)"
+    },
+    "annual_theme": {
+      "type": "string",
+      "title": "Annual Theme (\u12d3\u1218\u1273\u12ca \u132d\u1265\u1325)"
+    },
+    "milestones": {
+      "type": "string",
+      "title": "Annual Milestones (\u12d3\u1218\u1273\u12ca \u121d\u120d\u12ad\u1275 \u12a5\u1295\u1245\u1235\u1243\u1234\u12ce\u127d)"
+    },
+    "is_emergency": {
+      "type": "boolean",
+      "title": "Emergency / Extra Session",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "title": "Session Status",
+      "enum": [
+        "Scheduled",
+        "Completed",
+        "Rescheduled",
+        "Cancelled"
+      ],
+      "default": "Scheduled"
+    },
+    "assigned_by_name": {
+      "type": "string",
+      "title": "Assigned By"
+    },
+    "assigned_by_id": {
+      "type": "string",
+      "title": "Assigned By (ID)"
+    }
+  },
+  "required": [
+    "program_type",
+    "eth_year",
+    "month_index",
+    "day",
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1338\u120e\u1275 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1338\u120e\u1275 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

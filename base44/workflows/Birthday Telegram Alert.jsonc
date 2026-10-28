@@ -1,0 +1,44 @@
+{
+  "description": "Daily 12:00 \u1320\u12cb\u1275 (06:00 EAT) birthday alert \u2014 posts today's birthday members to the choir Telegram group via the sendBirthdayAlerts backend function. Sends a gender-aware message (women-only \u2192 to the women, men-only \u2192 to the men, mixed \u2192 one combined message naming all celebrants).",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 6 * * *",
+      "one_time_date": null,
+      "timezone": "Africa/Addis_Ababa",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "birthday_telegram_alert",
+      "version": "1.1",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_birthday_alert": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "sendBirthdayAlerts"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "\u12e8\u120d\u12f0\u1275 \u121b\u1235\u1273\u12c8\u1242\u12eb \u1208\u1274\u120c\u130d\u122b\u121d \u120b\u12ad",
+            "description": "Daily 12:00 \u1320\u12cb\u1275 (06:00 EAT) gender-aware birthday Telegram post"
+          }
+        }
+      }
+    ]
+  },
+  "name": "Birthday Telegram Alert"
+}

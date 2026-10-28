@@ -1,0 +1,117 @@
+{
+  "name": "FinanceReport",
+  "type": "object",
+  "properties": {
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year (\u12e8\u12a2\u1275\u12ee\u1335\u12eb \u12d3\u1218\u1275)"
+    },
+    "target_amount": {
+      "type": "number",
+      "title": "Annual Target (\u12d3\u1218\u1273\u12ca \u130d\u1265) \u2014 Birr",
+      "default": 0
+    },
+    "collected_income": {
+      "type": "number",
+      "title": "Collected Income (\u12e8\u1270\u1230\u1260\u1230\u1260 \u1308\u1262) \u2014 Birr",
+      "default": 0
+    },
+    "expenses": {
+      "type": "number",
+      "title": "Total Expenses (\u1320\u1245\u120b\u120b \u12c8\u132a) \u2014 Birr",
+      "default": 0
+    },
+    "balance": {
+      "type": "number",
+      "title": "Current Balance (\u12e8\u12a0\u1201\u1291 \u1240\u122a\u1290\u1275) \u2014 Birr",
+      "default": 0
+    },
+    "monthly_progress_json": {
+      "type": "string",
+      "title": "Monthly Plan Progress (JSON)"
+    },
+    "strategy_summary": {
+      "type": "string",
+      "title": "Fundraising Strategy Summary (\u12e8\u1308\u1262 \u1235\u1275\u122b\u1274\u1302 \u121b\u1320\u1243\u1208\u12eb)"
+    },
+    "submitted_by_name": {
+      "type": "string",
+      "title": "Submitted By"
+    },
+    "submitted_at": {
+      "type": "string",
+      "title": "Submitted At (ISO)"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department",
+      "default": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+    }
+  },
+  "required": [
+    "eth_year"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

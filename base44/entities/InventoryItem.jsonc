@@ -1,0 +1,113 @@
+{
+  "name": "InventoryItem",
+  "type": "object",
+  "properties": {
+    "item_name": {
+      "type": "string",
+      "title": "Item Name (\u12e8\u12d5\u1243 \u1235\u121d)"
+    },
+    "quantity_in": {
+      "type": "number",
+      "title": "Quantity Purchased (\u12e8\u1270\u1308\u12db \u1265\u12db\u1275)",
+      "default": 0
+    },
+    "quantity_remaining": {
+      "type": "number",
+      "title": "Remaining Stock (\u1240\u122a \u12d5\u1243)",
+      "default": 0
+    },
+    "unit_cost": {
+      "type": "number",
+      "title": "Unit Cost (\u12e8\u12a0\u1295\u12f5 \u12cb\u130b) \u2014 Birr",
+      "default": 0
+    },
+    "total_cost": {
+      "type": "number",
+      "title": "Total Cost (\u1320\u1245\u120b\u120b \u12cb\u130b) \u2014 Birr",
+      "default": 0
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Purchase Date (\u12e8\u130d\u12e5 \u1240\u1295)"
+    },
+    "source_entry_id": {
+      "type": "string",
+      "title": "Source Ledger Entry ID"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes (\u121b\u1235\u1273\u12c8\u123b)"
+    },
+    "recorded_by_name": {
+      "type": "string",
+      "title": "Recorded By"
+    }
+  },
+  "required": [
+    "item_name"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

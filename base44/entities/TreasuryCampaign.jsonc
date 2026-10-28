@@ -1,0 +1,119 @@
+{
+  "name": "TreasuryCampaign",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Campaign Title"
+    },
+    "type": {
+      "type": "string",
+      "title": "Type",
+      "enum": [
+        "Monthly Dues (\u12c8\u122b\u12ca \u1218\u12cb\u132e)",
+        "Special Fundraiser (\u120d\u12e9 \u1218\u12cb\u132e)",
+        "Other"
+      ],
+      "default": "Monthly Dues (\u12c8\u122b\u12ca \u1218\u12cb\u132e)"
+    },
+    "target_amount": {
+      "type": "number",
+      "title": "Target Amount (Birr)",
+      "default": 0
+    },
+    "amount_per_member": {
+      "type": "number",
+      "title": "Amount per Member (Birr)",
+      "default": 0
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year"
+    },
+    "month_index": {
+      "type": "number",
+      "title": "Ethiopian Month Index",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Open",
+        "Closed"
+      ],
+      "default": "Open"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    }
+  },
+  "required": [
+    "title",
+    "type"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}

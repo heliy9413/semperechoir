@@ -1,0 +1,118 @@
+{
+  "name": "ProjectMilestone",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "title": "Project ID"
+    },
+    "title": {
+      "type": "string",
+      "title": "Milestone / Task Title"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "title": "Assigned To"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "title": "Assigned To ID"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year (Deadline)"
+    },
+    "month_index": {
+      "type": "number",
+      "title": "Ethiopian Month Index (0-11)"
+    },
+    "day": {
+      "type": "number",
+      "title": "Ethiopian Day",
+      "default": 1
+    },
+    "tag": {
+      "type": "string",
+      "title": "Tracking Tag",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Delayed"
+      ],
+      "default": "Not Started"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    }
+  },
+  "required": [
+    "project_id",
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin"
+          }
+        }
+      ]
+    }
+  }
+}

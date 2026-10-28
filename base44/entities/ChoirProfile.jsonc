@@ -1,0 +1,77 @@
+{
+  "name": "ChoirProfile",
+  "type": "object",
+  "properties": {
+    "profile_image": {
+      "type": "string",
+      "title": "Cover / Banner Image URL"
+    },
+    "avatar_image": {
+      "type": "string",
+      "title": "Avatar / Profile Image URL"
+    },
+    "choir_name": {
+      "type": "string",
+      "title": "Choir Name",
+      "default": "Sempere Choir"
+    },
+    "choir_name_am": {
+      "type": "string",
+      "title": "Choir Name (Amharic)",
+      "default": "\u1230\u1295\u1354\u122d \u12b3\u12e8\u122d"
+    },
+    "dept_lockdown": {
+      "type": "boolean",
+      "title": "Department Lockdown (strict departmental RBAC)",
+      "default": true
+    }
+  },
+  "required": [
+    "choir_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        }
+      ]
+    }
+  }
+}

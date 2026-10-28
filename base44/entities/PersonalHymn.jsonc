@@ -1,0 +1,70 @@
+{
+  "name": "PersonalHymn",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Hymn Title (\u12e8\u1218\u12dd\u1219\u122d \u122d\u12d5\u1235)"
+    },
+    "scripture_ref": {
+      "type": "string",
+      "title": "Scripture Reference (\u12e8\u1218\u133d\u1210\u134d \u1325\u1245\u1235)"
+    },
+    "lyrics": {
+      "type": "string",
+      "title": "Lyrics / Verses (\u130d\u1325\u121d)"
+    },
+    "key_signature": {
+      "type": "string",
+      "title": "Chord"
+    },
+    "tempo_bpm": {
+      "type": "number",
+      "title": "Tempo (BPM)",
+      "default": 90
+    },
+    "style": {
+      "type": "string",
+      "title": "Style (\u1235\u1273\u12ed\u120d)",
+      "enum": [
+        "Waltz",
+        "Reggae",
+        "Ballad",
+        "Chikchika (\u127d\u12ad\u127d\u12ab)",
+        "Disco",
+        "Wollo (\u12c8\u120e)",
+        "Slow Rock",
+        "Anchihoye Lene (\u12a0\u1295\u127a\u1206\u12ec \u120c\u1294)",
+        "Tizita Minor (\u1275\u12dd\u1273 \u121b\u12ed\u1290\u122d)",
+        "Ambasel (\u12a0\u121d\u1263\u1230\u120d)",
+        "Bati (\u1263\u1272)"
+      ],
+      "default": "Waltz"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes (\u121b\u1235\u1273\u12c8\u123b)"
+    },
+    "author_name": {
+      "type": "string",
+      "title": "Author Name"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

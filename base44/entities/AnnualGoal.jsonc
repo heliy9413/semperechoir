@@ -1,0 +1,180 @@
+{
+  "name": "AnnualGoal",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Goal Title (\u12e8\u1235\u122b\u12cd \u122d\u12d5\u1235)"
+    },
+    "description": {
+      "type": "string",
+      "title": "Notes / Progress Remarks (\u121b\u1235\u1273\u12c8\u123b)"
+    },
+    "department": {
+      "type": "string",
+      "title": "Assigned Department / Leader (\u12e8\u121a\u1218\u122b\u12cd \u12ad\u134d\u120d)",
+      "enum": [
+        "\u12e8\u1218\u12dd\u1219\u122d \u1325\u1293\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u1338\u120e\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u12ae\u1295\u1230\u122d\u1275\u1293 \u12c8\u1295\u130c\u120d \u1235\u122d\u132d\u1275 \u12ad\u134d\u120d",
+        "\u12e8\u120d\u1265\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u12a0\u1274\u1295\u12f3\u1295\u1235 \u12ad\u134d\u120d",
+        "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d",
+        "\u12a0\u1320\u1243\u120b\u12ed"
+      ],
+      "default": "\u12a0\u1320\u1243\u120b\u12ed"
+    },
+    "target_month": {
+      "type": "number",
+      "title": "Target Month Index (0-10)",
+      "default": 0
+    },
+    "target_date": {
+      "type": "string",
+      "title": "Target Completion Date (\u12e8\u1218\u1328\u1228\u123b \u1240\u1295)",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Delayed"
+      ],
+      "default": "Not Started"
+    },
+    "progress": {
+      "type": "number",
+      "title": "Progress Percentage",
+      "default": 0
+    },
+    "plan_type": {
+      "type": "string",
+      "title": "Plan Type",
+      "enum": [
+        "master",
+        "department"
+      ],
+      "default": "master"
+    },
+    "alignment": {
+      "type": "string",
+      "title": "Alignment vs Master Plan",
+      "enum": [
+        "Aligned",
+        "Pending Review",
+        "Overdue"
+      ],
+      "default": "Pending Review"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium"
+    },
+    "event_type": {
+      "type": "string",
+      "title": "Event Type",
+      "enum": [
+        "Annual Concert",
+        "Fasting Retreat",
+        "Robe Distribution",
+        "Budget Audit",
+        "General"
+      ],
+      "default": "General"
+    }
+  },
+  "required": [
+    "title",
+    "department"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.choir_role": "dept_admin"
+              }
+            },
+            {
+              "data.department": "{{user.data.department}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

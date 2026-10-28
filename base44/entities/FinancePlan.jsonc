@@ -1,0 +1,150 @@
+{
+  "name": "FinancePlan",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Plan Title (\u12e8\u12d5\u1245\u12f5 \u122d\u12d5\u1235)"
+    },
+    "eth_year": {
+      "type": "number",
+      "title": "Ethiopian Year (\u12e8\u12a2\u1275\u12ee\u1335\u12eb \u12d3\u1218\u1275)"
+    },
+    "target_amount": {
+      "type": "number",
+      "title": "Annual Target Amount (\u12d3\u1218\u1273\u12ca \u12e8\u1308\u1295\u12d8\u1265 \u130d\u1266 \u1218\u1320\u1295) \u2014 Birr",
+      "default": 0
+    },
+    "primary_goals": {
+      "type": "string",
+      "title": "Plan Description / Primary Goals (\u12e8\u12d5\u1245\u12f5 \u12dd\u122d\u12dd\u122d)"
+    },
+    "monthly_breakdown_json": {
+      "type": "string",
+      "title": "Monthly Breakdown (JSON: month_index, expected_income, projected_expense, notes)"
+    },
+    "attachment_url": {
+      "type": "string",
+      "title": "Plan Document / Attachment URL"
+    },
+    "attachment_name": {
+      "type": "string",
+      "title": "Plan Document Name"
+    },
+    "status": {
+      "type": "string",
+      "title": "Plan Status",
+      "enum": [
+        "draft",
+        "submitted_to_leader",
+        "approved",
+        "revision_requested"
+      ],
+      "default": "draft"
+    },
+    "target_role": {
+      "type": "string",
+      "title": "Approval Target Role",
+      "default": "main_leader"
+    },
+    "submitted_at": {
+      "type": "string",
+      "title": "Submitted At (ISO)"
+    },
+    "submitter_name": {
+      "type": "string",
+      "title": "Submitted By Name"
+    },
+    "submitter_id": {
+      "type": "string",
+      "title": "Submitted By User ID"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "title": "Reviewed At (ISO)"
+    },
+    "reviewed_by_name": {
+      "type": "string",
+      "title": "Reviewed By"
+    },
+    "review_comment": {
+      "type": "string",
+      "title": "Review / Revision Comment"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department",
+      "default": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.choir_role": "dept_admin",
+            "data.department": "\u12e8\u1308\u1295\u12d8\u1265 \u12ad\u134d\u120d"
+          }
+        }
+      ]
+    }
+  }
+}
